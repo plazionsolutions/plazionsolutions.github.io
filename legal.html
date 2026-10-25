@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centro Legal | Plazion Solutions</title>
+<meta name="description" content="Políticas legales de las aplicaciones de Plazion Solutions.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%2322d3ee'/><stop offset='1' stop-color='%231d4ed8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='%23111'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-weight='900' font-size='38' fill='url(%23g)'>P</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['"DM Sans"','sans-serif'], display: ['Montserrat','sans-serif'] },
+      colors: { ink: '#0b0b10', ink2: '#121218', brand: { cyan:'#22d3ee', blue:'#1d6fd8', deep:'#1e40af' } }
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior:smooth; }
+  .grad-text { background:linear-gradient(90deg,#4fe0ea 0%,#22a7d8 45%,#1d4ed8 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .grad-bg { background:linear-gradient(90deg,#22d3ee,#1d4ed8); }
+  .grid-bg { background-image:linear-gradient(rgba(34,211,238,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.05) 1px,transparent 1px); background-size:56px 56px; }
+  .prose h2 { scroll-margin-top:96px; }
+</style>
+</head>
+<body class="bg-ink text-slate-200 font-sans antialiased">
+<header class="fixed top-0 inset-x-0 z-50 bg-ink/85 backdrop-blur border-b border-cyan-400/10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex flex-col leading-none select-none" aria-label="Plazion Solutions - inicio">
+  <span class="font-display font-black tracking-tight grad-text text-2xl">PLAZION</span>
+  <span class="font-display font-medium text-white tracking-[0.18em] text-[0.55em] mt-1 self-center" style="font-size:0.62rem">SOLUTIONS</span>
+</a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400">
+      <a href="index.html#servicios" class="hover:text-white">Servicios</a>
+      <a href="index.html#apps" class="hover:text-white">Aplicaciones</a>
+      <a href="legal.html" class="hover:text-white">Legal</a>
+      <a href="soporte.html" class="hover:text-white">Soporte</a>
+    </nav>
+    <a href="soporte.html" class="grad-bg text-black font-semibold text-sm px-4 py-2 rounded-lg hover:opacity-90">Contactar</a>
+  </div>
+  <div class="md:hidden border-t border-white/5 flex justify-around text-xs text-slate-400 py-2">
+    <a href="index.html#servicios">Servicios</a><a href="index.html#apps">Apps</a><a href="legal.html">Legal</a><a href="soporte.html">Soporte</a>
+  </div>
+</header>
+
+<main class="pt-28 md:pt-24">
+<section class="grid-bg border-b border-white/5"><div class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+<p class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Legal</p>
+<h1 class="font-display font-extrabold text-4xl text-white mt-3">Centro legal</h1>
+<p class="text-slate-400 mt-4 max-w-2xl">Estas políticas se aplican a todas las aplicaciones y servicios publicados por John Plazarte, persona natural, bajo el nombre Plazion Solutions. Última actualización: 24 de octubre de 2026.</p>
+</div></section>
+<section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5"><a href="privacidad.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-shield-lock"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Política de Privacidad</h3><p class="text-sm text-slate-400 mt-2">Qué datos recopilan nuestras apps, para qué y cómo los protegemos.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/privacidad.html</p></a><a href="terminos.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-file-earmark-text"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Términos y Condiciones</h3><p class="text-sm text-slate-400 mt-2">Reglas de uso de nuestras aplicaciones y servicios.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/terminos.html</p></a><a href="eliminar-cuenta.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-person-x"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Eliminación de Cuenta y Datos</h3><p class="text-sm text-slate-400 mt-2">Cómo solicitar que borremos tu cuenta y tus datos.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/eliminar-cuenta.html</p></a><a href="soporte.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-life-preserver"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Soporte</h3><p class="text-sm text-slate-400 mt-2">Ayuda, preguntas frecuentes y contacto.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/soporte.html</p></a><a href="suscripciones.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-credit-card"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Pagos, Suscripciones y Reembolsos</h3><p class="text-sm text-slate-400 mt-2">Compras dentro de la app, renovaciones y devoluciones.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/suscripciones.html</p></a><a href="cookies.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-cookie"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Política de Cookies</h3><p class="text-sm text-slate-400 mt-2">Uso de cookies y tecnologías similares en web y apps.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/cookies.html</p></a><a href="seguridad-infantil.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-people"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Seguridad Infantil</h3><p class="text-sm text-slate-400 mt-2">Estándares contra el abuso y la explotación infantil.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/seguridad-infantil.html</p></a><a href="uso-aceptable.html" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition block">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-check2-circle"></i></div>
+<h3 class="font-display font-bold text-white mt-5 group-hover:text-cyan-300">Uso Aceptable</h3><p class="text-sm text-slate-400 mt-2">Conductas permitidas y prohibidas en nuestras apps.</p>
+<p class="text-xs text-slate-500 mt-4 font-mono">/uso-aceptable.html</p></a></section>
+</main>
+<footer class="bg-ink2 border-t border-cyan-400/10 mt-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 grid gap-10 md:grid-cols-3">
+    <div>
+      <a href="index.html" class="flex flex-col leading-none select-none" aria-label="Plazion Solutions - inicio">
+  <span class="font-display font-black tracking-tight grad-text text-2xl">PLAZION</span>
+  <span class="font-display font-medium text-white tracking-[0.18em] text-[0.55em] mt-1 self-center" style="font-size:0.62rem">SOLUTIONS</span>
+</a>
+      <p class="text-sm text-slate-400 mt-5 max-w-xs">Plazion Solutions es el nombre con el que John Plazarte, desarrollador independiente, publica sus aplicaciones y servicios desde Ecuador.</p>
+    </div>
+    <div>
+      <h4 class="font-display font-bold text-white text-sm mb-4">Legal</h4>
+      <ul class="space-y-2 text-sm text-slate-400"><li><a href="privacidad.html" class="hover:text-cyan-300">Política de Privacidad</a></li><li><a href="terminos.html" class="hover:text-cyan-300">Términos y Condiciones</a></li><li><a href="eliminar-cuenta.html" class="hover:text-cyan-300">Eliminación de Cuenta y Datos</a></li><li><a href="soporte.html" class="hover:text-cyan-300">Soporte</a></li><li><a href="suscripciones.html" class="hover:text-cyan-300">Pagos, Suscripciones y Reembolsos</a></li><li><a href="cookies.html" class="hover:text-cyan-300">Política de Cookies</a></li><li><a href="seguridad-infantil.html" class="hover:text-cyan-300">Seguridad Infantil</a></li><li><a href="uso-aceptable.html" class="hover:text-cyan-300">Uso Aceptable</a></li></ul>
+    </div>
+    <div>
+      <h4 class="font-display font-bold text-white text-sm mb-4">Contacto</h4>
+      <ul class="space-y-2 text-sm text-slate-400">
+        <li><i class="bi bi-envelope mr-2 text-cyan-300"></i><a href="mailto:plazartejohn@gmail.com" class="hover:text-cyan-300">plazartejohn@gmail.com</a></li>
+        <li><i class="bi bi-geo-alt mr-2 text-cyan-300"></i>Quito, Ecuador</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/5 py-6 text-center text-xs text-slate-500">© <span id="y"></span> John Plazarte · Plazion Solutions. Todos los derechos reservados.</div>
+</footer>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body></html>

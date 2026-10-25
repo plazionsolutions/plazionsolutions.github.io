@@ -1,829 +1,164 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plazion Solutions | Desarrollo Web & Software</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    :root {
-      --cyan: #22d3ee;
-      --blue: #3b82f6;
-      --dark: #0a0a0f;
-      --dark2: #0f0f1a;
-      --card: rgba(15,15,30,0.8);
-      --border: rgba(34,211,238,0.15);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plazion Solutions | Desarrollo de Software y Apps</title>
+<meta name="description" content="Plazion Solutions: desarrollo de aplicaciones móviles, web y software a la medida en Ecuador.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%2322d3ee'/><stop offset='1' stop-color='%231d4ed8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='%23111'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-weight='900' font-size='38' fill='url(%23g)'>P</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['"DM Sans"','sans-serif'], display: ['Montserrat','sans-serif'] },
+      colors: { ink: '#0b0b10', ink2: '#121218', brand: { cyan:'#22d3ee', blue:'#1d6fd8', deep:'#1e40af' } }
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    /* Custom cursor */
-    body { cursor: none; }
-    #cursor {
-      width: 12px; height: 12px;
-      background: var(--cyan);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
-      mix-blend-mode: screen;
-    }
-    #cursor-ring {
-      width: 36px; height: 36px;
-      border: 1.5px solid rgba(34,211,238,0.6);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: all 0.15s ease;
-    }
-    body:has(a:hover) #cursor,
-    body:has(button:hover) #cursor { width: 20px; height: 20px; background: #3b82f6; }
-    body:has(a:hover) #cursor-ring,
-    body:has(button:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(59,130,246,0.7); }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--dark);
-      color: #e2e8f0;
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-    }
-
-    h1,h2,h3,h4,nav .logo { font-family: 'Syne', sans-serif; }
-
-    /* Grid background */
-    .grid-bg {
-      background-image:
-        linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .grid-bg-dense {
-      background-image:
-        linear-gradient(rgba(34,211,238,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34,211,238,0.06) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-
-    /* Glow orbs */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(100px);
-      pointer-events: none;
-    }
-    .orb-cyan { background: rgba(34,211,238,0.12); }
-    .orb-blue { background: rgba(59,130,246,0.12); }
-
-    /* Navbar */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 48px;
-      height: 70px;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    .logo span {
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    nav a.nav-link {
-      color: rgba(226,232,240,0.65);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-      position: relative;
-    }
-    nav a.nav-link::after {
-      content: '';
-      position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
-      background: var(--cyan);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-    nav a.nav-link:hover { color: #fff; }
-    nav a.nav-link:hover::after { transform: scaleX(1); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-       border: 1px solid var(--border);
-       color: #000;
-      font-weight: 500;
-      padding: 10px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.88rem;
-      transition: border-color 0.2s, color 0.2s;
-      display: inline-block;
-    }
-    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    .btn-outline {
-      border: 1px solid var(--border);
-      color: rgba(226,232,240,0.8);
-      font-weight: 500;
-      padding: 10px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.88rem;
-      transition: border-color 0.2s, color 0.2s;
-      display: inline-block;
-    }
-    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 100px 48px 60px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-content { max-width: 1200px; margin: 0 auto; width: 100%; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(34,211,238,0.08);
-      border: 1px solid rgba(34,211,238,0.2);
-      border-radius: 100px;
-      padding: 6px 16px;
-      font-size: 0.8rem;
-      color: var(--cyan);
-      font-weight: 500;
-      margin-bottom: 28px;
-    }
-    .badge-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
-
-    h1.hero-title {
-      font-family: 'Unbounded', sans-serif;
-      font-size: clamp(2rem, 4.2vw, 4rem);
-      font-weight: 900;
-      line-height: 1.18;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero-sub {
-      font-size: clamp(1.1rem, 2vw, 1.6rem);
-      font-weight: 300;
-      color: rgba(226,232,240,0.6);
-      margin-bottom: 24px;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .hero-desc {
-      max-width: 560px;
-      color: rgba(226,232,240,0.55);
-      font-size: 1rem;
-      line-height: 1.75;
-      margin-bottom: 40px;
-    }
-
-    /* Typing */
-    #typing { color: var(--cyan); }
-    .caret::after {
-      content: "▌";
-      display: inline-block;
-      margin-left: 2px;
-      animation: blink 1s steps(1) infinite;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-
-    /* Stats row */
-    .stats { display: flex; gap: 48px; margin-top: 56px; }
-    .stat-val {
-      font-family: 'Unbounded', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .stat-label { font-size: 0.82rem; color: rgba(226,232,240,0.45); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
-
-    /* Hero visual */
-    .hero-visual {
-      position: absolute;
-      right: 60px; top: 50%;
-      transform: translateY(-50%);
-      width: 460px; height: 460px;
-    }
-    .hex-ring {
-      position: absolute; inset: 0;
-      border: 1px solid rgba(34,211,238,0.15);
-      border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
-      animation: morph 10s ease-in-out infinite;
-    }
-    .hex-ring:nth-child(2) {
-      animation-delay: -3.3s;
-      border-color: rgba(59,130,246,0.12);
-      animation-duration: 13s;
-    }
-    .hex-ring:nth-child(3) {
-      animation-delay: -6.6s;
-      border-color: rgba(34,211,238,0.08);
-      animation-duration: 16s;
-      inset: 30px;
-    }
-    @keyframes morph {
-      0%,100% { border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%; }
-      33% { border-radius: 70% 30% 46% 54% / 30% 60% 40% 70%; }
-      66% { border-radius: 40% 60% 70% 30% / 60% 40% 60% 40%; }
-    }
-    .hero-icon {
-      position: absolute; inset: 60px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 7rem;
-      color: rgba(34,211,238,0.15);
-    }
-    .floating-tag {
-      position: absolute;
-      background: rgba(15,15,30,0.92);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 14px;
-      font-size: 0.78rem;
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      color: var(--cyan);
-      backdrop-filter: blur(12px);
-      animation: float 4s ease-in-out infinite;
-      display: flex; align-items: center; gap: 7px;
-      white-space: nowrap;
-    }
-    .floating-tag img { width: 18px; height: 18px; object-fit: contain; }
-    .ft1 { top: 10px;  right: -20px;  animation-delay: 0s;    animation-duration: 3.8s; }
-    .ft2 { top: 30%;   right: -50px;  animation-delay: -0.8s; animation-duration: 4.5s; }
-    .ft3 { top: 60%;   right: -30px;  animation-delay: -1.6s; animation-duration: 3.5s; }
-    .ft4 { bottom: 20px; right: 40px; animation-delay: -2.2s; animation-duration: 5s; }
-    .ft5 { bottom: 80px; left: -40px; animation-delay: -1s;   animation-duration: 4.2s; }
-    .ft6 { top: 20%;   left: -50px;   animation-delay: -2.8s; animation-duration: 3.9s; }
-    .ft7 { top: -10px; left: 40px;    animation-delay: -3.5s; animation-duration: 4.8s; }
-    @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)} }
-
-    /* Section shared */
-    section { position: relative; }
-    .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 48px; }
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-family: 'Unbounded', sans-serif;;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-    .section-desc {
-      color: rgba(226,232,240,0.5);
-      max-width: 540px;
-      line-height: 1.7;
-    }
-
-    /* Services */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 56px;
-    }
-    .service-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 28px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .service-card:hover { border-color: rgba(34,211,238,0.35); transform: translateY(-4px); }
-    .service-card:hover::before { opacity: 1; }
-    .service-icon {
-      width: 48px; height: 48px;
-      background: rgba(34,211,238,0.08);
-      border: 1px solid rgba(34,211,238,0.2);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; color: var(--cyan);
-      margin-bottom: 20px;
-    }
-    .service-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: -0.3px;
-    }
-    .service-card p { font-size: 0.88rem; color: rgba(226,232,240,0.5); line-height: 1.65; }
-    .service-card.featured {
-      background: linear-gradient(135deg, rgba(34,211,238,0.06) 0%, rgba(59,130,246,0.06) 100%);
-      border-color: rgba(34,211,238,0.3);
-    }
-
-    /* Skills */
-    .skills-section { background: var(--dark2); }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 14px;
-      margin-top: 56px;
-    }
-    .skill-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 20px 14px;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 10px;
-      transition: border-color 0.25s, background 0.25s, transform 0.25s;
-    }
-    .skill-card:hover {
-      border-color: rgba(34,211,238,0.3);
-      background: rgba(34,211,238,0.05);
-      transform: translateY(-3px);
-    }
-    .skill-card img { width: 36px; height: 36px; object-fit: contain; }
-    .skill-card span { font-size: 0.75rem; font-weight: 600; color: rgba(226,232,240,0.65); text-align: center; }
-
-    /* Packages */
-    .packages-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 56px;
-    }
-    .pkg-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-    .pkg-card:hover { transform: translateY(-6px); border-color: rgba(34,211,238,0.4); }
-    .pkg-card.popular {
-      border-color: rgba(34,211,238,0.4);
-      background: linear-gradient(160deg, rgba(34,211,238,0.07) 0%, rgba(10,10,15,0.9) 60%);
-    }
-    .popular-badge {
-      position: absolute; top: 20px; right: 20px;
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      color: #000; font-weight: 800; font-size: 0.7rem;
-      padding: 4px 12px; border-radius: 100px;
-      font-family: 'Syne', sans-serif; letter-spacing: 0.05em;
-    }
-    .pkg-name { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
-    .pkg-price {
-      font-family: 'Unbounded', sans-serif;
-      font-size: 3rem; font-weight: 800; letter-spacing: -2px;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .pkg-from { font-size: 0.75rem; color: rgba(226,232,240,0.4); margin-bottom: 28px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .pkg-features { list-style: none; margin-bottom: 32px; }
-    .pkg-features li {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 0.88rem; color: rgba(226,232,240,0.7);
-      padding: 7px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .pkg-features li:last-child { border-bottom: none; }
-    .pkg-features li .check { color: var(--cyan); font-size: 0.8rem; }
-
-    /* CTA */
-    .cta-section {
-      text-align: center;
-      padding: 120px 48px;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-section h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 20px; }
-    .cta-section p { color: rgba(226,232,240,0.5); max-width: 500px; margin: 0 auto 40px; line-height: 1.7; }
-
-    /* Footer */
-    footer {
-      background: var(--dark2);
-      border-top: 1px solid var(--border);
-      padding: 40px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    footer p { font-size: 0.85rem; color: rgba(226,232,240,0.4); }
-    .footer-socials { display: flex; gap: 16px; }
-    .footer-socials a {
-      width: 36px; height: 36px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(226,232,240,0.5);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .footer-socials a:hover { border-color: var(--cyan); color: var(--cyan); }
-
-    /* WhatsApp FAB */
-    .wa-fab {
-      position: fixed; bottom: 32px; right: 32px; z-index: 200;
-      width: 54px; height: 54px;
-      background: #25d366;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; color: #fff;
-      text-decoration: none;
-      box-shadow: 0 4px 24px rgba(37,211,102,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .wa-fab:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.6); }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      nav { padding: 0 20px; }
-      .hero { padding: 100px 20px 60px; }
-      .hero-visual { display: none; }
-      .section-inner { padding: 80px 20px; }
-      .stats { gap: 28px; flex-wrap: wrap; }
-      footer { flex-direction: column; gap: 20px; text-align: center; }
-    }
-
-    /* Scroll reveal */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* Divider line */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(34,211,238,0.2), transparent);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-  </style>
+  }
+}
+</script>
+<style>
+  html { scroll-behavior:smooth; }
+  .grad-text { background:linear-gradient(90deg,#4fe0ea 0%,#22a7d8 45%,#1d4ed8 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .grad-bg { background:linear-gradient(90deg,#22d3ee,#1d4ed8); }
+  .grid-bg { background-image:linear-gradient(rgba(34,211,238,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.05) 1px,transparent 1px); background-size:56px 56px; }
+  .prose h2 { scroll-margin-top:96px; }
+</style>
 </head>
+<body class="bg-ink text-slate-200 font-sans antialiased">
+<header class="fixed top-0 inset-x-0 z-50 bg-ink/85 backdrop-blur border-b border-cyan-400/10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex flex-col leading-none select-none" aria-label="Plazion Solutions - inicio">
+  <span class="font-display font-black tracking-tight grad-text text-2xl">PLAZION</span>
+  <span class="font-display font-medium text-white tracking-[0.18em] text-[0.55em] mt-1 self-center" style="font-size:0.62rem">SOLUTIONS</span>
+</a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400">
+      <a href="index.html#servicios" class="hover:text-white">Servicios</a>
+      <a href="index.html#apps" class="hover:text-white">Aplicaciones</a>
+      <a href="legal.html" class="hover:text-white">Legal</a>
+      <a href="soporte.html" class="hover:text-white">Soporte</a>
+    </nav>
+    <a href="soporte.html" class="grad-bg text-black font-semibold text-sm px-4 py-2 rounded-lg hover:opacity-90">Contactar</a>
+  </div>
+  <div class="md:hidden border-t border-white/5 flex justify-around text-xs text-slate-400 py-2">
+    <a href="index.html#servicios">Servicios</a><a href="index.html#apps">Apps</a><a href="legal.html">Legal</a><a href="soporte.html">Soporte</a>
+  </div>
+</header>
 
-<body>
-  <!-- Custom Cursor -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
-
-  <!-- Navbar -->
-  <nav>
-    <div class="logo"><span>PLAZION</span> <span style="color:rgba(226,232,240,0.9); -webkit-text-fill-color: rgba(226,232,240,0.9); font-weight:500; font-size:0.85rem; margin-left:4px;">SOLUTIONS</span></div>
-    <div style="display:flex; gap:36px;">
-      <a href="#" class="nav-link">Inicio</a>
-      <a href="#servicios" class="nav-link">Servicios</a>
-      <a href="#precios" class="nav-link">Precios</a>
-      <a href="#skills" class="nav-link">Skills</a>
+<main>
+<section class="relative overflow-hidden grid-bg pt-36 pb-24">
+  <div class="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full bg-cyan-400/10 blur-3xl"></div>
+  <div class="absolute bottom-0 left-10 w-[380px] h-[380px] rounded-full bg-blue-600/10 blur-3xl"></div>
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
+    <span class="inline-flex items-center gap-2 text-xs font-medium text-cyan-300 border border-cyan-400/25 bg-cyan-400/5 rounded-full px-4 py-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse"></span>Desarrollador independiente de software</span>
+    <h1 class="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.1] mt-7 max-w-3xl">Software y aplicaciones que <span class="grad-text">impulsan tu negocio</span>.</h1>
+    <p class="text-slate-400 text-lg mt-6 max-w-xl leading-relaxed">Plazion Solutions es la marca personal de John Plazarte: diseño, desarrollo y publicación de aplicaciones móviles, web y de escritorio con código limpio, diseño moderno y soporte continuo.</p>
+    <div class="flex flex-wrap gap-3 mt-9">
+      <a href="#servicios" class="grad-bg text-black font-semibold px-6 py-3 rounded-lg hover:opacity-90">Ver servicios</a>
+      <a href="https://wa.me/593968592636" target="_blank" rel="noopener" class="border border-white/15 text-slate-200 px-6 py-3 rounded-lg hover:border-cyan-400 hover:text-cyan-300"><i class="bi bi-whatsapp mr-2"></i>WhatsApp</a>
     </div>
-    <div style="display:flex; gap:12px; align-items:center;">
-      <a href="cv-John Plazarte.pdf" target="_blank" class="btn-outline">Descargar CV</a>
-      <a href="https://wa.me/593968592636" target="_blank" class="btn-primary">Contactar</a>
+    <div class="flex flex-wrap gap-10 mt-14">
+      <div><p class="font-display font-black text-3xl grad-text">5+</p><p class="text-xs uppercase tracking-widest text-slate-500 mt-1">Años de experiencia</p></div>
+      <div><p class="font-display font-black text-3xl grad-text">Android · iOS</p><p class="text-xs uppercase tracking-widest text-slate-500 mt-1">Publicación en tiendas</p></div>
+      <div><p class="font-display font-black text-3xl grad-text">24 h</p><p class="text-xs uppercase tracking-widest text-slate-500 mt-1">Tiempo de respuesta</p></div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero grid-bg">
-    <div class="orb orb-cyan" style="width:600px;height:600px;top:-100px;right:-100px;"></div>
-    <div class="orb orb-blue" style="width:400px;height:400px;bottom:0;left:200px;"></div>
+<section id="servicios" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 scroll-mt-20">
+  <p class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Qué hacemos</p>
+  <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mt-3">Servicios</h2>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12"><div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-phone"></i></div>
+<h3 class="font-display font-bold text-white mt-5">Apps Móviles</h3><p class="text-sm text-slate-400 mt-2 leading-relaxed">Aplicaciones Android e iOS con Flutter, listas para publicar en Google Play y App Store.</p></div><div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-globe2"></i></div>
+<h3 class="font-display font-bold text-white mt-5">Desarrollo Web</h3><p class="text-sm text-slate-400 mt-2 leading-relaxed">Sitios, landing pages y aplicaciones web rápidas, seguras y optimizadas.</p></div><div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-gear"></i></div>
+<h3 class="font-display font-bold text-white mt-5">Software a la Medida</h3><p class="text-sm text-slate-400 mt-2 leading-relaxed">Sistemas empresariales, CRM, ERP, dashboards y apps de escritorio.</p></div><div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-robot"></i></div>
+<h3 class="font-display font-bold text-white mt-5">IA & Automatización</h3><p class="text-sm text-slate-400 mt-2 leading-relaxed">Bots para WhatsApp y web, agentes inteligentes e integraciones con IA.</p></div><div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-cart3"></i></div>
+<h3 class="font-display font-bold text-white mt-5">E-commerce</h3><p class="text-sm text-slate-400 mt-2 leading-relaxed">Tiendas en línea con pasarelas de pago, inventario y pedidos.</p></div><div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:border-cyan-400/40 hover:-translate-y-1 transition">
+<div class="w-11 h-11 rounded-xl bg-cyan-400/10 border border-cyan-400/20 grid place-items-center text-cyan-300 text-lg"><i class="bi bi-plug"></i></div>
+<h3 class="font-display font-bold text-white mt-5">Integraciones API</h3><p class="text-sm text-slate-400 mt-2 leading-relaxed">Conectamos tus sistemas con APIs seguras y procesos automatizados.</p></div></div>
+</section>
 
-    <div class="hero-content">
-      <div class="badge">
-        <span class="badge-dot"></span>
-        Desarrollo Web & Software Profesional
+<section id="apps" class="bg-ink2 border-y border-white/5 scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-24">
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Productos</p>
+    <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mt-3">Nuestras aplicaciones</h2>
+    <p class="text-slate-400 mt-4 max-w-xl">Aplicaciones publicadas por John Plazarte (Plazion Solutions) en Google Play y App Store.</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+      <!-- Duplica esta tarjeta por cada app publicada -->
+      <div class="rounded-2xl border border-white/10 bg-ink p-6">
+        <div class="flex items-center gap-4"><div class="w-14 h-14 rounded-2xl grad-bg grid place-items-center text-black text-2xl"><i class="bi bi-tv"></i></div>
+        <div><h3 class="font-display font-bold text-white">Control Remoto Lite</h3><p class="text-xs text-slate-500">Utilidades · Smart TV por WiFi</p></div></div>
+        <p class="text-sm text-slate-400 mt-4">Controla tu Smart TV desde el celular por WiFi: navega, cambia el volumen y escribe en el televisor con el teclado del teléfono.</p>
+        <a href="privacidad.html#control-remoto-lite" class="inline-block text-xs text-cyan-300 mt-3 hover:underline">Privacidad de esta app</a>
+        <div class="flex gap-2 mt-5 text-xs">
+          <a href="#" class="border border-white/15 rounded-lg px-3 py-2 hover:border-cyan-400"><i class="bi bi-google-play mr-1"></i>Google Play</a>
+          <a href="#" class="border border-white/15 rounded-lg px-3 py-2 hover:border-cyan-400"><i class="bi bi-apple mr-1"></i>App Store</a>
+        </div>
       </div>
-      <h1 class="hero-title">
-        Construimos el<br>
-        <span class="gradient-text">futuro digital</span><br>
-        de tu negocio.
-      </h1>
-      <div class="hero-sub">
-        <span id="typing" class="caret"></span>
-      </div>
-      <p class="hero-desc">
-        En Plazion Solutions diseñamos y desarrollamos soluciones web, móviles y de software a la medida.
-        Código limpio, diseño moderno y resultados que escalan con tu empresa.
-      </p>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <a href="#precios" class="btn-primary" style="padding:14px 32px;font-size:0.95rem;">Ver planes</a>
-        <a href="https://wa.me/593968592636" target="_blank" class="btn-outline" style="padding:14px 32px;font-size:0.95rem;">
-          <i class="bi bi-whatsapp" style="margin-right:8px;"></i>WhatsApp
-        </a>
-      </div>
-      <div class="stats">
-        <div><div class="stat-val">5+</div><div class="stat-label">Años de experiencia</div></div>
-      </div>
-    </div>
-
-    <div class="hero-visual">
-      <div class="hex-ring"></div>
-      <div class="hex-ring"></div>
-      <div class="hex-ring"></div>
-      <div class="hero-icon"><i class="bi bi-code-slash"></i></div>
-      <div class="floating-tag ft1"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg"> Angular</div>
-      <div class="floating-tag ft2"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg"> Flutter</div>
-      <div class="floating-tag ft3"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg"> .NET Core</div>
-      <div class="floating-tag ft4"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"> PostgreSQL</div>
-      <div class="floating-tag ft5"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"> Python</div>
-      <div class="floating-tag ft6"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg"> Azure</div>
-      <div class="floating-tag ft7"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"> JavaScript</div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- SERVICES -->
-  <section id="servicios">
-    <div class="section-inner grid-bg">
-      <div class="orb orb-cyan" style="width:500px;height:500px;top:-80px;left:-100px;"></div>
-      <div class="reveal">
-        <div class="section-label">Qué hacemos</div>
-        <h2 class="section-title">Servicios que <span class="gradient-text">transforman</span></h2>
-        <p class="section-desc">Desde landing pages hasta sistemas empresariales, desarrollamos cada proyecto con precisión y buenas prácticas.</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="bi bi-globe2"></i></div>
-          <h3>Desarrollo Web</h3>
-          <p>Sitios web modernos, rápidos y optimizados para atraer clientes y potenciar tu marca con las mejores tecnologías.</p>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="bi bi-phone"></i></div>
-          <h3>Desarrollo Móvil</h3>
-          <p>Aplicaciones para Android e iOS con Flutter. Intuitivas, escalables y con diseño nativo de alta calidad.</p>
-        </div>
-        <div class="service-card featured reveal">
-          <div class="service-icon" style="background:rgba(34,211,238,0.12);border-color:rgba(34,211,238,0.3)"><i class="bi bi-robot"></i></div>
-          <h3>Bots & Automatización</h3>
-          <p>Bots inteligentes para WhatsApp, web y Facebook. Integraciones con IA y APIs para automatizar tu negocio.</p>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="bi bi-cart3"></i></div>
-          <h3>E-commerce</h3>
-          <p>Tiendas virtuales completas con inventario, pasarelas de pago (Stripe, PayPal, Wompi, Datafast) y envíos.</p>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="bi bi-plug"></i></div>
-          <h3>Integraciones API</h3>
-          <p>Conectamos tus sistemas con APIs seguras y eficientes. Automatizamos procesos entre plataformas.</p>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="bi bi-gear"></i></div>
-          <h3>Software Personalizado</h3>
-          <p>Sistemas a la medida que se adaptan a procesos únicos de tu negocio: CRM, ERP, dashboards y más.</p>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="bi bi-layout-text-window"></i></div>
-          <h3>Landing Pages</h3>
-          <p>Páginas orientadas a conversión, con diseño atractivo, SEO básico y alto rendimiento en mobile.</p>
-        </div>
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="bi bi-server"></i></div>
-          <h3>Hosting & Dominios</h3>
-          <p>Asesoría para elegir el servidor ideal. VPS, hosting compartido y dominios para tu proyecto.</p>
-        </div>
-        <div class="service-card featured reveal" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-          <div class="service-icon"><i class="bi bi-chat-dots"></i></div>
-          <h3>¿Necesitas algo más?</h3>
-          <p style="margin-bottom:20px;">Cuéntanos tu idea y creamos la solución ideal para tu negocio.</p>
-          <a href="https://wa.me/593968592636?text=Hola, quiero más información" target="_blank" class="btn-primary">
-            Consultar por WhatsApp
-          </a>
-        </div>
+      <div class="rounded-2xl border border-dashed border-cyan-400/25 p-6 grid place-items-center text-center">
+        <div><i class="bi bi-plus-circle text-3xl text-cyan-300"></i><p class="text-white font-semibold mt-3">Próximamente</p><p class="text-sm text-slate-500 mt-1">Nuevas apps en desarrollo</p></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <div class="divider"></div>
+<section id="legal" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 scroll-mt-20">
+  <p class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Transparencia</p>
+  <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mt-3">Centro legal</h2>
+  <p class="text-slate-400 mt-4 max-w-xl">Políticas aplicables a todas nuestras aplicaciones y servicios.</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10"><a href="privacidad.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-shield-lock text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Política de Privacidad</p><p class="text-xs text-slate-500 mt-1">/privacidad.html</p></div></a><a href="terminos.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-file-earmark-text text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Términos y Condiciones</p><p class="text-xs text-slate-500 mt-1">/terminos.html</p></div></a><a href="eliminar-cuenta.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-person-x text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Eliminación de Cuenta y Datos</p><p class="text-xs text-slate-500 mt-1">/eliminar-cuenta.html</p></div></a><a href="soporte.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-life-preserver text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Soporte</p><p class="text-xs text-slate-500 mt-1">/soporte.html</p></div></a><a href="suscripciones.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-credit-card text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Pagos, Suscripciones y Reembolsos</p><p class="text-xs text-slate-500 mt-1">/suscripciones.html</p></div></a><a href="cookies.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-cookie text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Política de Cookies</p><p class="text-xs text-slate-500 mt-1">/cookies.html</p></div></a><a href="seguridad-infantil.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-people text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Seguridad Infantil</p><p class="text-xs text-slate-500 mt-1">/seguridad-infantil.html</p></div></a><a href="uso-aceptable.html" class="group rounded-xl border border-white/10 bg-white/[0.02] p-5 hover:border-cyan-400/40 flex gap-4">
+<i class="bi bi-check2-circle text-xl text-cyan-300"></i><div><p class="text-white font-semibold group-hover:text-cyan-300">Uso Aceptable</p><p class="text-xs text-slate-500 mt-1">/uso-aceptable.html</p></div></a></div>
+</section>
 
-  <!-- PACKAGES / PRICES -->
-  <section id="precios" style="background: var(--dark2);">
-    <div class="section-inner grid-bg-dense">
-      <div class="orb orb-blue" style="width:500px;height:500px;top:0;right:-50px;"></div>
-      <div class="reveal">
-        <div class="section-label">Planes y Precios</div>
-        <h2 class="section-title">Inversión <span class="gradient-text">transparente</span></h2>
-        <p class="section-desc">Paquetes claros para cada etapa de tu negocio. Siempre con dominio y hosting incluidos el primer año.</p>
-      </div>
-      <div class="packages-grid">
-        <!-- Landing Page -->
-        <div class="pkg-card reveal">
-          <div class="pkg-name">Landing Page</div>
-          <div class="pkg-price">$119</div>
-          <div class="pkg-from">desde</div>
-          <ul class="pkg-features">
-            <li><i class="bi bi-check2 check"></i> Diseño adaptable (responsive)</li>
-            <li><i class="bi bi-check2 check"></i> SEO básico incluido</li>
-            <li><i class="bi bi-check2 check"></i> Botón de WhatsApp</li>
-            <li><i class="bi bi-check2 check"></i> Dominio gratis × 1 año</li>
-            <li><i class="bi bi-check2 check"></i> Hosting gratis × 1 año</li>
-          </ul>
-          <a href="https://wa.me/593968592636?text=Hola, quiero una Landing Page" target="_blank" class="btn-outline" style="width:100%;text-align:center;">Contratar</a>
-        </div>
-        <!-- Sitio Web -->
-        <div class="pkg-card popular reveal">
-          <div class="popular-badge">POPULAR</div>
-          <div class="pkg-name">Sitio Web</div>
-          <div class="pkg-price">$199</div>
-          <div class="pkg-from">desde</div>
-          <ul class="pkg-features">
-            <li><i class="bi bi-check2 check"></i> 5 secciones completas</li>
-            <li><i class="bi bi-check2 check"></i> Formulario de contacto + SEO</li>
-            <li><i class="bi bi-check2 check"></i> Botón de WhatsApp</li>
-            <li><i class="bi bi-check2 check"></i> Dominio gratis × 1 año</li>
-            <li><i class="bi bi-check2 check"></i> Hosting gratis × 1 año</li>
-          </ul>
-          <a href="https://wa.me/593968592636?text=Hola, quiero un Sitio Web" target="_blank" class="btn-primary" style="width:100%;text-align:center;">Contratar</a>
-        </div>
-        <!-- Ecommerce -->
-        <div class="pkg-card reveal">
-          <div class="pkg-name">E-commerce</div>
-          <div class="pkg-price">$599</div>
-          <div class="pkg-from">desde</div>
-          <ul class="pkg-features">
-            <li><i class="bi bi-check2 check"></i> Botón de pago integrado</li>
-            <li><i class="bi bi-check2 check"></i> Acompañamiento inicial</li>
-            <li><i class="bi bi-check2 check"></i> Productos, categorías, pedidos</li>
-            <li><i class="bi bi-check2 check"></i> Dominio gratis × 1 año</li>
-            <li><i class="bi bi-check2 check"></i> Hosting gratis × 1 año</li>
-          </ul>
-          <a href="https://wa.me/593968592636?text=Hola, quiero un E-commerce" target="_blank" class="btn-outline" style="width:100%;text-align:center;">Contratar</a>
-        </div>
-        <!-- A la medida -->
-        <div class="pkg-card featured reveal" style="border-color:rgba(59,130,246,0.4);background:linear-gradient(160deg,rgba(59,130,246,0.07),rgba(10,10,15,0.9) 60%);">
-          <div class="pkg-name" style="color: var(--blue);">Desarrollo a la Medida</div>
-          <div class="pkg-price" style="font-size:2rem;">Cotiza</div>
-          <div class="pkg-from">precio personalizado</div>
-          <ul class="pkg-features">
-            <li><i class="bi bi-check2 check" style="color:var(--blue)"></i> Integraciones con IA y API</li>
-            <li><i class="bi bi-check2 check" style="color:var(--blue)"></i> Bots y agentes inteligentes</li>
-            <li><i class="bi bi-check2 check" style="color:var(--blue)"></i> Automatizaciones complejas</li>
-            <li><i class="bi bi-check2 check" style="color:var(--blue)"></i> Apps web, móvil y escritorio</li>
-            <li><i class="bi bi-check2 check" style="color:var(--blue)"></i> Análisis de datos</li>
-          </ul>
-          <a href="https://wa.me/593968592636?text=Hola, quiero cotizar un proyecto a medida" target="_blank" class="btn-primary" style="width:100%;text-align:center;background:linear-gradient(135deg,var(--blue),#6366f1);">Cotizar ahora</a>
-        </div>
-      </div>
+<section class="relative overflow-hidden grid-bg border-t border-white/5">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-24 text-center">
+    <h2 class="font-display font-black text-3xl md:text-5xl text-white leading-tight">¿Tienes una idea? <span class="grad-text">Hagámosla app.</span></h2>
+    <p class="text-slate-400 mt-5">Cuéntanos tu proyecto y te enviamos una propuesta personalizada.</p>
+    <div class="flex flex-wrap justify-center gap-3 mt-9">
+      <a href="https://wa.me/593968592636?text=Hola,%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener" class="grad-bg text-black font-semibold px-6 py-3 rounded-lg"><i class="bi bi-whatsapp mr-2"></i>Escribir por WhatsApp</a>
+      <a href="mailto:plazartejohn@gmail.com" class="border border-white/15 px-6 py-3 rounded-lg hover:border-cyan-400 hover:text-cyan-300"><i class="bi bi-envelope mr-2"></i>plazartejohn@gmail.com</a>
     </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-inner">
-      <div class="reveal">
-        <div class="section-label">Tecnologías</div>
-        <h2 class="section-title">Stack <span class="gradient-text">técnico</span></h2>
-        <p class="section-desc">Trabajamos con las herramientas más modernas y demandadas del mercado.</p>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"><span>HTML5</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"><span>CSS3</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"><span>JavaScript</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg"><span>Bootstrap</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"><span>Tailwind</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg"><span>Angular</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"><span>C#</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"><span>Python</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"><span>Java</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg"><span>.NET Core</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg"><span>Spring Boot</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" style="filter:invert(1)"><span>Django</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blazor/blazor-original.svg"><span>Blazor</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg"><span>Flutter</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/androidstudio/androidstudio-original.svg"><span>Android Studio</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg"><span>Arduino</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"><span>PostgreSQL</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg"><span>SQL Server</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg"><span>Azure</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apache/apache-original.svg"><span>Apache</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"><span>Git</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" style="filter:invert(1)"><span>GitHub</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg"><span>GitLab</span></div>
-        <div class="skill-card reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows8/windows8-original.svg"><span>IIS</span></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- CTA -->
-  <section class="cta-section grid-bg-dense">
-    <div class="orb orb-cyan" style="width:600px;height:600px;top:-200px;left:50%;transform:translateX(-50%);"></div>
-    <div class="reveal">
-      <div class="section-label" style="text-align:center;">¿Listo para empezar?</div>
-      <h2 style="font-family: 'Unbounded', sans-serif;">Tu proyecto empieza<br><span class="gradient-text">con una conversación.</span></h2>
-      <p>Cuéntanos tu idea. Nuestro equipo te responde en menos de 24 horas con una propuesta personalizada.</p>
-      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <a href="https://wa.me/593968592636?text=Hola, quiero más información sobre sus servicios" target="_blank" class="btn-primary" style="padding:16px 40px;font-size:1rem;">
-          <i class="bi bi-whatsapp" style="margin-right:8px;"></i>Hablar por WhatsApp
-        </a>
-        <a href="mailto:plazartejohn@gmail.com" class="btn-outline" style="padding:16px 40px;font-size:1rem;">
-          <i class="bi bi-envelope" style="margin-right:8px;"></i>plazartejohn@gmail.com
-        </a>
-      </div>
-      <p style="margin-top:24px;font-size:0.85rem;color:rgba(226,232,240,0.35);">📞 0968592636 · Ecuador</p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
+  </div>
+</section>
+</main>
+<a href="https://wa.me/593968592636" target="_blank" rel="noopener" aria-label="WhatsApp" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] text-white text-2xl grid place-items-center shadow-lg shadow-green-500/30 hover:scale-110 transition"><i class="bi bi-whatsapp"></i></a>
+<footer class="bg-ink2 border-t border-cyan-400/10 mt-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 grid gap-10 md:grid-cols-3">
     <div>
-      <div class="logo" style="margin-bottom:6px;"><span>PLAZION</span> <span style="-webkit-text-fill-color:rgba(226,232,240,0.6);font-weight:400;font-size:0.85rem;">SOLUTIONS</span></div>
-      <p>© <span id="year"></span> Desarrollado por John Plazarte</p>
+      <a href="index.html" class="flex flex-col leading-none select-none" aria-label="Plazion Solutions - inicio">
+  <span class="font-display font-black tracking-tight grad-text text-2xl">PLAZION</span>
+  <span class="font-display font-medium text-white tracking-[0.18em] text-[0.55em] mt-1 self-center" style="font-size:0.62rem">SOLUTIONS</span>
+</a>
+      <p class="text-sm text-slate-400 mt-5 max-w-xs">Plazion Solutions es el nombre con el que John Plazarte, desarrollador independiente, publica sus aplicaciones y servicios desde Ecuador.</p>
     </div>
-    <div class="footer-socials">
-      <a href="https://wa.me/593968592636" target="_blank"><i class="bi bi-whatsapp"></i></a>
-      <a href="mailto:plazartejohn@gmail.com"><i class="bi bi-envelope"></i></a>
-      <a href="https://github.com" target="_blank"><i class="bi bi-github"></i></a>
+    <div>
+      <h4 class="font-display font-bold text-white text-sm mb-4">Legal</h4>
+      <ul class="space-y-2 text-sm text-slate-400"><li><a href="privacidad.html" class="hover:text-cyan-300">Política de Privacidad</a></li><li><a href="terminos.html" class="hover:text-cyan-300">Términos y Condiciones</a></li><li><a href="eliminar-cuenta.html" class="hover:text-cyan-300">Eliminación de Cuenta y Datos</a></li><li><a href="soporte.html" class="hover:text-cyan-300">Soporte</a></li><li><a href="suscripciones.html" class="hover:text-cyan-300">Pagos, Suscripciones y Reembolsos</a></li><li><a href="cookies.html" class="hover:text-cyan-300">Política de Cookies</a></li><li><a href="seguridad-infantil.html" class="hover:text-cyan-300">Seguridad Infantil</a></li><li><a href="uso-aceptable.html" class="hover:text-cyan-300">Uso Aceptable</a></li></ul>
     </div>
-  </footer>
-
-  <!-- WhatsApp FAB -->
-  <a href="https://wa.me/593968592636?text=Hola, quiero más información" target="_blank" class="wa-fab">
-    <i class="bi bi-whatsapp"></i>
-  </a>
-
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursor-ring');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      setTimeout(() => {
-        ring.style.left = e.clientX + 'px';
-        ring.style.top = e.clientY + 'px';
-      }, 80);
-    });
-
-    // Typing
-    const words = ["Desarrollo Web Profesional", "Aplicaciones Móviles", "Software a la Medida", "Automatización con IA"];
-    const el = document.getElementById("typing");
-    let wordIndex = 0, charIndex = 0, typing = true;
-    function tick() {
-      const current = words[wordIndex];
-      if (typing) {
-        el.textContent = current.slice(0, charIndex + 1);
-        charIndex++;
-        if (charIndex === current.length) { typing = false; setTimeout(tick, 1400); return; }
-        setTimeout(tick, 65);
-      } else {
-        el.textContent = current.slice(0, charIndex - 1);
-        charIndex--;
-        if (charIndex === 0) { typing = true; wordIndex = (wordIndex + 1) % words.length; setTimeout(tick, 300); return; }
-        setTimeout(tick, 40);
-      }
-    }
-    tick();
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          const delay = (Array.from(e.target.parentElement.children).indexOf(e.target)) * 60;
-          setTimeout(() => e.target.classList.add('visible'), delay);
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(r => observer.observe(r));
-  </script>
-</body>
-</html>
+    <div>
+      <h4 class="font-display font-bold text-white text-sm mb-4">Contacto</h4>
+      <ul class="space-y-2 text-sm text-slate-400">
+        <li><i class="bi bi-envelope mr-2 text-cyan-300"></i><a href="mailto:plazartejohn@gmail.com" class="hover:text-cyan-300">plazartejohn@gmail.com</a></li>
+        <li><i class="bi bi-geo-alt mr-2 text-cyan-300"></i>Quito, Ecuador</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/5 py-6 text-center text-xs text-slate-500">© <span id="y"></span> John Plazarte · Plazion Solutions. Todos los derechos reservados.</div>
+</footer>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body></html>
